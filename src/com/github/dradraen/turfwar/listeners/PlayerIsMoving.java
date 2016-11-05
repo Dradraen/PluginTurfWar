@@ -9,6 +9,12 @@ public class PlayerIsMoving implements Listener {
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		Bukkit.broadcastMessage("Player is Moving!");
+		
+		if ((int)e.getFrom().getX() != (int) e.getTo().getX() ||
+				(int) e.getFrom().getY() != (int) e.getTo().getY() ||
+				(int) e.getFrom().getZ() != (int) e.getTo().getZ()) {
+		// Player is Moving coords
+			Bukkit.broadcastMessage(e.getPlayer().getLocation().toString());
+		}
 	}
 }
