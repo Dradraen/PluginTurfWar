@@ -1,0 +1,11 @@
+name: TurfWar
+version: 0.0.1
+description: TurfWar Minigame Plugin
+authors: [Dradraen, JosephCW]
+main: com.github.dradraen.turfwar.Main
+
+commands:
+  turfwar:
+    description: Base TurfWar Command
+    aliases: [tw]
+    usage: /<command>
