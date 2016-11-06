@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import com.github.dradraen.turfwar.commands.TurfWarCommand;
 import com.github.dradraen.turfwar.listeners.PlayerIsMoving;
 
@@ -31,5 +30,4 @@ public class Main extends JavaPlugin {
 			pm.registerEvents(l, this);
 		}
 	}
-	
 }
