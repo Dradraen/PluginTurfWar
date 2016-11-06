@@ -1,11 +1,20 @@
 package com.github.dradraen.turfwar.listeners;
 
-import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import com.github.dradraen.turfwar.Main;
+import com.github.dradraen.turfwar.blocks.BlockHandler;
+
 public class PlayerIsMoving implements Listener {
+	private Main plugin;
+	
+	public PlayerIsMoving(Main plugin) {
+		this.plugin = plugin;
+	}
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
@@ -13,8 +22,11 @@ public class PlayerIsMoving implements Listener {
 		if ((int)e.getFrom().getX() != (int) e.getTo().getX() ||
 				(int) e.getFrom().getY() != (int) e.getTo().getY() ||
 				(int) e.getFrom().getZ() != (int) e.getTo().getZ()) {
-		// Player is Moving coords
-			Bukkit.broadcastMessage(e.getPlayer().getLocation().toString());
+			Block blockBeneathPlayer = e.getTo().clone().subtract(0, 1, 0).getBlock();
+			BlockHandler bh = new BlockHandler(plugin);
+			if (bh.blockBeneathIsWool(blockBeneathPlayer)) {
+				bh.setBlockWoolColor(blockBeneathPlayer, DyeColor.RED);
+			}
 		}
 	}
 }
