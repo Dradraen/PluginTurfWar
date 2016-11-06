@@ -11,7 +11,7 @@ import com.github.dradraen.turfwar.listeners.PlayerIsMoving;
 public class Main extends JavaPlugin {
 	
 	private Listener[] listenerList = {
-		new PlayerIsMoving()
+		new PlayerIsMoving(this)
 		//new PlayerJoinedGame	
 	};
 	
