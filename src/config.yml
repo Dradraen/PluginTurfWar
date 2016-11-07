@@ -1,0 +1,8 @@
+arenacords:
+  height: 64
+  topleft:
+    x: 0
+    z: 0
+  bottomright:
+    x: 20
+    z: -20

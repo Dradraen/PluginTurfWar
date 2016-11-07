@@ -9,3 +9,6 @@ commands:
     description: Base TurfWar Command
     aliases: [tw]
     usage: /<command>
+  turfwar create:
+    description: Create a new arena at these cords
+    usage: /<command> <x1> <z1> <x2> <z2>
