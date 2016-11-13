@@ -20,5 +20,4 @@ public class TurfWarCommand implements CommandExecutor {
 		Bukkit.broadcastMessage("Inside TurfWarCommand.java");
 		return false;
 	}
-
 }

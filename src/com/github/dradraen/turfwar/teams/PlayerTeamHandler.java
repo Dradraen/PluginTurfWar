@@ -1,36 +1,28 @@
 package com.github.dradraen.turfwar.teams;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.scoreboard.Team;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class PlayerTeamHandler {
-		private ScoreboardManager manager = Bukkit.getScoreboardManager();
-		private Scoreboard board = manager.getNewScoreboard();
-		public Team redTeam = board.registerNewTeam("RED");
-		public Team blueTeam = board.registerNewTeam("BLUE");
-		private Objective objective = board.registerNewObjective("Turf", "level");
-		public int[] teamScore = new int[2];
+		private ArrayList<UUID> redTeam;
+		private ArrayList<UUID> blueTeam;
+		public HashMap<String,ArrayList<UUID>> teamList;
+		public PlayerTeamHandler()
+		{
+			init();
+		}
 		public void init()
 		{
-			objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-			objective.setDisplayName("Turf Claimed");
-			for(Player p: Bukkit.getServer().getOnlinePlayers())
-			{
-				redTeam.addEntry(p.getName());
-				@SuppressWarnings("deprecation")
-				Score score = objective.getScore(p);
-				score.setScore(0);
-			}
+			redTeam = new ArrayList<>();
+			blueTeam = new ArrayList<>();
+			teamList = new HashMap<>();
+			teamList.put("Red", redTeam);
+			teamList.put("Blue", blueTeam);
 		}
-		public void setTeamScore(Team team)
-		{
-			
+		public ArrayList<UUID> getTeam(int teamIndex) {
+			if(teamIndex == 0)
+				return teamList.get("Red");
+			return teamList.get("Blue");
 		}
-		
 }

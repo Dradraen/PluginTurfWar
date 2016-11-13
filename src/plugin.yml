@@ -9,3 +9,7 @@ commands:
     description: Base TurfWar Command
     aliases: [tw]
     usage: /<command>
+  join:
+    description: Joins a random team for TurfWar
+    aliases: [twjoin,tjoin]
+    usage: /<command>
