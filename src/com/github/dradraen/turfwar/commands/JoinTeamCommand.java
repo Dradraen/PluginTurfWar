@@ -1,57 +1,62 @@
 package com.github.dradraen.turfwar.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.dradraen.turfwar.Main;
-import com.github.dradraen.turfwar.teams.PlayerTeamHandler;
+import com.github.dradraen.turfwar.scorekeeper.ETeam;
 
 public class JoinTeamCommand implements CommandExecutor{
 
-	Main plugin;
-	PlayerTeamHandler teamHandler = new PlayerTeamHandler();
-	public JoinTeamCommand(Main plugin, PlayerTeamHandler TeamHandler){
+	private Main plugin;
+	private String cUsage = ChatColor.GOLD + "REPLACE - <red/blue>";
+	
+	
+	public JoinTeamCommand(Main plugin){
 		this.plugin = plugin;
-		this.teamHandler = TeamHandler;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		int red = 0;
-		int blue = 1;
-		if(sender instanceof Player){
-			if(args.length > 0){
-				sender.sendMessage("You have too many arguments!");
-				return true;
-			}
-			else{
-					if(teamHandler.getTeam(red).contains(((Player) sender).getPlayer().getUniqueId())){
-						sender.sendMessage("You are already on Team " + teamHandler.teamList.keySet().toArray()[red]);
-						return true;
-					}
-					if(teamHandler.getTeam(blue).contains(((Player) sender).getPlayer().getUniqueId())){
-						sender.sendMessage("You are already on Team " + teamHandler.teamList.keySet().toArray()[blue]);
-						return true;
-					}
-					if(teamHandler.getTeam(red).size() <= teamHandler.getTeam(blue).size()){
-						
-						teamHandler.getTeam(red).add(((Player) sender).getPlayer().getUniqueId());
-						sender.sendMessage("You have joined " + teamHandler.teamList.keySet().toArray()[red]);
-					}
-					else if(teamHandler.getTeam(blue).size() < teamHandler.getTeam(red).size()){
-						
-						teamHandler.getTeam(blue).add(((Player) sender).getPlayer().getUniqueId());
-						sender.sendMessage("You have joined " + teamHandler.teamList.keySet().toArray()[blue]);
-					}
-				
-				return true;
-			}
+		
+		// If the server sends the command then cancel
+		if (!(sender instanceof Player)) {
+			sender.sendMessage(ChatColor.GOLD + "TW - Only players can join a team. ");
+			return true;
 		}
-		else {
-	        sender.sendMessage("You must be a player!");
-	        return true;
-	    }
+		
+		// If the player sends wrong amount of parameters
+		if (args.length != 1) {
+			sender.sendMessage(cUsage.replace("REPLACE", commandLabel));
+			return true;
+		}
+		
+		// If the user sends the wrong color?
+		if (!args[0].equalsIgnoreCase("blue") && !args[0].equalsIgnoreCase("red"))  {
+			sender.sendMessage(cUsage.replace("REPLACE", commandLabel));
+			return true;
+		}
+		
+		
+		// Add / Remove player from the teams.
+		Player p = (Player) sender;
+		
+		if (args[0].equalsIgnoreCase("blue")) {
+			p.sendMessage(ChatColor.GOLD + "TW - You joined " + ChatColor.BLUE + "blue " + ChatColor.GOLD + "team!");
+			putPlayerOnTeam(p, ETeam.BLUE);
+		} else {
+			// If the player is already on blue team, remove them from the team.
+			p.sendMessage(ChatColor.GOLD + "TW - You joined " + ChatColor.RED + "red " + ChatColor.GOLD + "team!");
+			putPlayerOnTeam(p, ETeam.RED);
+		}
+		
+		return true;
+	}
+	
+	public void putPlayerOnTeam(Player p, ETeam team) {
+		plugin.getPlayers().put(p, team);
 	}
 }
