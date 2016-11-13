@@ -25,5 +25,4 @@ public class BlockHandler {
 		pTeam.init();
 		b.setData(d.getData());
 	}
-	
 }

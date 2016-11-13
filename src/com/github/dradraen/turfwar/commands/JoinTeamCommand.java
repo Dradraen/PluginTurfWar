@@ -12,8 +12,7 @@ public class JoinTeamCommand implements CommandExecutor{
 
 	Main plugin;
 	PlayerTeamHandler teamHandler = new PlayerTeamHandler();
-	public JoinTeamCommand(Main plugin, PlayerTeamHandler TeamHandler)
-	{
+	public JoinTeamCommand(Main plugin, PlayerTeamHandler TeamHandler){
 		this.plugin = plugin;
 		this.teamHandler = TeamHandler;
 	}
@@ -22,33 +21,26 @@ public class JoinTeamCommand implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		int red = 0;
 		int blue = 1;
-		if(sender instanceof Player)
-		{
-			if(args.length > 0)
-			{
+		if(sender instanceof Player){
+			if(args.length > 0){
 				sender.sendMessage("You have too many arguments!");
 				return true;
 			}
-			else
-			{
-					if(teamHandler.getTeam(red).contains(((Player) sender).getPlayer().getUniqueId()))
-					{
+			else{
+					if(teamHandler.getTeam(red).contains(((Player) sender).getPlayer().getUniqueId())){
 						sender.sendMessage("You are already on Team " + teamHandler.teamList.keySet().toArray()[red]);
 						return true;
 					}
-					if(teamHandler.getTeam(blue).contains(((Player) sender).getPlayer().getUniqueId()))
-					{
+					if(teamHandler.getTeam(blue).contains(((Player) sender).getPlayer().getUniqueId())){
 						sender.sendMessage("You are already on Team " + teamHandler.teamList.keySet().toArray()[blue]);
 						return true;
 					}
-					if(teamHandler.getTeam(red).size() <= teamHandler.getTeam(blue).size() && !(teamHandler.getTeam(blue).contains(((Player) sender).getPlayer().getUniqueId())))
-					{
+					if(teamHandler.getTeam(red).size() <= teamHandler.getTeam(blue).size()){
 						
 						teamHandler.getTeam(red).add(((Player) sender).getPlayer().getUniqueId());
 						sender.sendMessage("You have joined " + teamHandler.teamList.keySet().toArray()[red]);
 					}
-					else if(teamHandler.getTeam(blue).size() < teamHandler.getTeam(red).size() && !(teamHandler.getTeam(red).contains(((Player) sender).getPlayer().getUniqueId())))
-					{
+					else if(teamHandler.getTeam(blue).size() < teamHandler.getTeam(red).size()){
 						
 						teamHandler.getTeam(blue).add(((Player) sender).getPlayer().getUniqueId());
 						sender.sendMessage("You have joined " + teamHandler.teamList.keySet().toArray()[blue]);
@@ -56,14 +48,10 @@ public class JoinTeamCommand implements CommandExecutor{
 				
 				return true;
 			}
-			
 		}
-		else 
-		{
+		else {
 	        sender.sendMessage("You must be a player!");
 	        return true;
 	    }
-		
 	}
-
 }
