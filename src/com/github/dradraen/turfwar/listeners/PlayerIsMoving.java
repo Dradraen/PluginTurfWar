@@ -7,12 +7,14 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.github.dradraen.turfwar.Main;
 import com.github.dradraen.turfwar.blocks.BlockHandler;
+import com.github.dradraen.turfwar.scorekeeper.ScoreKeeperHandler;
 
 public class PlayerIsMoving implements Listener {
 	private Main plugin;
-	
+	private ScoreKeeperHandler scoreTracker;
 	public PlayerIsMoving(Main plugin) {
 		this.plugin = plugin;
+		scoreTracker = new ScoreKeeperHandler(plugin);
 	}
 	
 	@EventHandler
@@ -25,6 +27,7 @@ public class PlayerIsMoving implements Listener {
 				BlockHandler bh = new BlockHandler(plugin);
 				if (bh.blockBeneathIsWool(blockBeneathPlayer)) {
 					bh.setBlockWoolColor(blockBeneathPlayer, plugin.TeamHandler.determineColor(e.getPlayer().getUniqueId()));
+					scoreTracker.calcScore(e.getPlayer().getUniqueId());
 				}
 			}
 		}

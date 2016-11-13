@@ -12,7 +12,7 @@ import com.github.dradraen.turfwar.teams.PlayerTeamHandler;
 
 public class Main extends JavaPlugin {
 	public PlayerTeamHandler TeamHandler = new PlayerTeamHandler();
-	private Listener[] listenerList = {
+	public Listener[] listenerList = {
 		new PlayerIsMoving(this)
 		//new PlayerJoinedGame	
 	};
